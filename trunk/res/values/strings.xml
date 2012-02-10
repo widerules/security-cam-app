@@ -3,5 +3,15 @@
 
     <string name="hello">Hello World, SecurityCamAppActivity!</string>
     <string name="app_name">SecurityCamApp</string>
+    <string name="take">take</string>
+    <string name="send">send</string>
+    <string name="save">Save</string>
+    <string name="test">Test</string>
+    <string name="port">Port</string>
+    <string name="user">User</string>
+    <string name="password">Password</string>
+    <string name="smtp">SMTP Server</string>
+    <string name="from">From Address</string>
+    <string name="to">To Address</string>
 
 </resources>

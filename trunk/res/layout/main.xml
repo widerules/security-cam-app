@@ -8,12 +8,12 @@
         android:id="@+id/take"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="@string/take" />
 
-    <FrameLayout
-        android:id="@+id/frameLayout1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
-    </FrameLayout>
+    <Button
+        android:id="@+id/send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/send" />
 
 </LinearLayout>
