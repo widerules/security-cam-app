@@ -13,5 +13,6 @@
     <string name="smtp">SMTP Server</string>
     <string name="from">From Address</string>
     <string name="to">To Address</string>
+    <string name="config">config</string>
 
 </resources>
