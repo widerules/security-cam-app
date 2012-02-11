@@ -191,6 +191,7 @@ public class SecurityCamAppActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setTitle("final version");
 		setContentView(R.layout.main);
 		mSurfaceView = new SurfaceView(this);
 
