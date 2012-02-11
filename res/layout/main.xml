@@ -16,4 +16,10 @@
         android:layout_height="wrap_content"
         android:text="@string/send" />
 
+    <Button
+        android:id="@+id/configbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button" />
+
 </LinearLayout>
