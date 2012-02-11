@@ -5,121 +5,134 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/user_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/user" />
-
-    <EditText
-        android:id="@+id/user_text_input"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:imeOptions="actionDone"
-        android:inputType="text"
-        android:singleLine="true" />
-    <TextView
-        android:id="@+id/password_test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/password" />
-
-    <EditText
-        android:id="@+id/password_text_input"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:imeOptions="actionDone"
-        android:inputType="text"
-        android:singleLine="true" />
-
-    <TextView
-        android:id="@+id/smtp_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/smtp" />
-
-    <EditText
-        android:id="@+id/smtp_text_input"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:imeOptions="actionDone"
-        android:inputType="text"
-        android:singleLine="true" />
-    <TextView
-        android:id="@+id/from_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/from" 
-        />
-
-    <EditText
-        android:id="@+id/from_text_input"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:imeOptions="actionDone"
-        android:inputType="text"
-        android:singleLine="true" />
-	<TextView
-        android:id="@+id/from_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/to" 
-        />
-
-    <EditText
-        android:id="@+id/to_text_input"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:imeOptions="actionDone"
-        android:inputType="text"
-        android:singleLine="true" />
-    
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="fill_parent"
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-        
-        
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
-            android:text="@string/port" />
 
-        <EditText
-            android:id="@+id/port_text_input"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.75"
-            android:inputType="number"
-            android:imeOptions="actionDone"
-             >
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
 
-            <requestFocus />
-        </EditText>
+            <TextView
+                android:id="@+id/user_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/user" />
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/user_text_input"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:singleLine="true" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center" >
+            <TextView
+                android:id="@+id/password_test"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/password" />
 
-        <Button
-            android:id="@+id/buttonSave"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:text="@string/save" />
+            <EditText
+                android:id="@+id/password_text_input"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:singleLine="true" />
 
-        <Button
-            android:id="@+id/ButtonCheck"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:text="@string/test" />
+            <TextView
+                android:id="@+id/smtp_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/smtp" />
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/smtp_text_input"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:singleLine="true" />
+
+            <TextView
+                android:id="@+id/from_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/from" />
+
+            <EditText
+                android:id="@+id/from_text_input"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:singleLine="true" />
+
+            <TextView
+                android:id="@+id/from_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/to" />
+
+            <EditText
+                android:id="@+id/to_text_input"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:singleLine="true" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:text="@string/port" />
+
+                <EditText
+                    android:id="@+id/port_text_input"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.75"
+                    android:imeOptions="actionDone"
+                    android:inputType="number" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center" >
+
+                <Button
+                    android:id="@+id/buttonSave"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:text="@string/save" />
+
+                <Button
+                    android:id="@+id/ButtonCheck"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/test" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
                 
 </LinearLayout>
