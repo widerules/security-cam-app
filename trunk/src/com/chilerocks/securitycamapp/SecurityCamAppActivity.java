@@ -201,6 +201,7 @@ public class SecurityCamAppActivity extends Activity {
 		takeButton.setOnClickListener(buttonlistener);
 		sendButton.setOnClickListener(sendlistener);
 		configButton.setOnClickListener(configlistener);
+		
 		IntentFilter filter = new IntentFilter(SMS_RECEIVED);
 		registerReceiver(receiver_SMS, filter);
 
