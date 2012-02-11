@@ -8,8 +8,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
+import android.media.audiofx.EnvironmentalReverb;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -26,15 +28,16 @@ public class SecurityCamAppActivity extends Activity {
 	Camera camera;
 	File file;
 	Settings settings;
+	String captura= "capture.jpg";
 	public static final String PREFS_NAME = "pref.dat";
 
 	PictureCallback jpegCallback = new PictureCallback() {
 		  public void onPictureTaken(byte[] _data, Camera _camera) {
 		try{
-			FileOutputStream outStream = null;
-			String captura= "captura";
-			file = File.createTempFile(captura, ".jpeg");
-			outStream = new FileOutputStream(file);
+			FileOutputStream outStream;
+
+			//file = File.createTempFile(captura, ".jpeg");
+			outStream = openFileOutput(captura, SecurityCamAppActivity.MODE_WORLD_READABLE);			
 			outStream.write(_data);
 			outStream.close();
 			Log.d("image", "onPictureTaken - wrote bytes: " + _data.length);
@@ -62,7 +65,8 @@ public class SecurityCamAppActivity extends Activity {
 			e.printStackTrace();
 		}
         Camera.Parameters p = camera.getParameters();
-        p.setJpegQuality(10);//a value between 1 and 100
+        p.setJpegQuality(100);//a value between 1 and 100
+        p.setFocusMode(Camera.Parameters.FOCUS_MODE_INFINITY);
         camera.setParameters(p);
         camera.startPreview();
 		Log.d("image","click");
@@ -93,8 +97,9 @@ private OnClickListener sendlistener = new OnClickListener() {
 	      m.set_to(toArr);
 	      m.set_from(settings.getFrom());
 	      m.set_subject("Security Cam App image");
-	      m.setBody("image"); 
+	      m.setBody("image");
           try {
+        	  file = getFileStreamPath(captura);
         	  m.addAttachment(file.getPath());
 		} catch (Exception e) {
 			e.printStackTrace();
