@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
 import android.app.Activity;
+import android.content.Intent;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.os.AsyncTask;
@@ -25,6 +25,7 @@ public class SecurityCamAppActivity extends Activity {
 	SurfaceView  mSurfaceView;
 	Camera camera;
 	File file;
+	Settings settings;
 	public static final String PREFS_NAME = "pref.dat";
 
 	PictureCallback jpegCallback = new PictureCallback() {
@@ -79,12 +80,20 @@ private OnClickListener sendlistener = new OnClickListener() {
 	public void onClick(View v) {
 		 Log.d("image", "enviando");
 		 //put your details
-		 Mail m = new Mail("dev@chilerocks.org", "your_pass");
-		 String[] toArr = {"dev@chilerocks.org"}; 
-	      m.set_to(toArr); 
-	      m.set_from("dev@chilerocks.org"); 
-	      m.set_subject("imagen"); 
-	      m.setBody("aquiestalaimagen"); 
+		  
+		 
+		 
+		  settings= new Settings(getApplicationContext());
+		  
+		  Mail m = new Mail(settings.getUser(),settings.getPass());
+		  m.set_host(settings.getSmtp());
+		  m.set_port(settings.getPort());
+		  m.set_sport(settings.getPort());
+		  String[] toArr = {settings.getTo()};
+	      m.set_to(toArr);
+	      m.set_from(settings.getFrom());
+	      m.set_subject("Security Cam App image");
+	      m.setBody("image"); 
           try {
         	  m.addAttachment(file.getPath());
 		} catch (Exception e) {
@@ -94,16 +103,20 @@ private OnClickListener sendlistener = new OnClickListener() {
           task.execute(new Mail[]{m});
 	}
 };
-
+private OnClickListener configlistener = new OnClickListener() {
+	public void onClick(View v) {
+	
+		Intent myIntent = new Intent(getApplicationContext(), ConfigActivity.class);
+        startActivityForResult(myIntent,0);
+	}
+};
 
 private class SendEmail extends AsyncTask<Mail, Integer, Boolean> {
-	 
-	
+
     @Override
     protected void onPreExecute() {
     	Log.d("image","enviando");
     }
-
 	@Override
 	protected Boolean doInBackground(Mail... mails) {
 		try{
@@ -121,7 +134,6 @@ private class SendEmail extends AsyncTask<Mail, Integer, Boolean> {
 	        } else { 
 	        Toast.makeText(SecurityCamAppActivity.this, "Email was not sent.", Toast.LENGTH_LONG).show(); 
 	        }
-
 	}
 }
 	
@@ -134,9 +146,10 @@ private class SendEmail extends AsyncTask<Mail, Integer, Boolean> {
         
         Button takeButton=(Button)findViewById(R.id.take);
         Button sendButton=(Button)findViewById(R.id.send);
+        Button configButton= (Button)findViewById(R.id.configbutton);
         
         takeButton.setOnClickListener(buttonlistener);
         sendButton.setOnClickListener(sendlistener);
-
+        configButton.setOnClickListener(configlistener);
     }
 }
