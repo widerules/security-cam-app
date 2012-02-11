@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
@@ -91,26 +90,33 @@
                 android:inputType="text"
                 android:singleLine="true" />
 
-            <LinearLayout
-                android:id="@+id/linearLayout2"
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/port" />
+
+            <EditText
+                android:id="@+id/port_text_input"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
+                android:inputType="number" />
 
-                <TextView
-                    android:id="@+id/textView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:text="@string/port" />
+            <TextView
+                android:id="@+id/codeword_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/codeword" />
 
-                <EditText
-                    android:id="@+id/port_text_input"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.75"
-                    android:imeOptions="actionDone"
-                    android:inputType="number" />
-            </LinearLayout>
+            <EditText
+                android:id="@+id/codeword_text_input"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:singleLine="true" />
 
             <LinearLayout
                 android:id="@+id/linearLayout1"
@@ -132,7 +138,6 @@
                     android:text="@string/test" />
             </LinearLayout>
         </LinearLayout>
-
     </ScrollView>
-                
+
 </LinearLayout>
