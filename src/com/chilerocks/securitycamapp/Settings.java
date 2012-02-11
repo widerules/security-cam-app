@@ -12,12 +12,9 @@ public class Settings {
 	private static final String PASSWORD_KEY = "password";
 	private static final String FROM_KEY = "from";
 	private static final String TO_KEY = "to";
-	
+	private static final String CODEWORD_KEY="codeword";
 	private final SharedPreferences settings;
     
-	/**
-	 * @param act The context from which to pick SharedPreferences
-	 */
 	public Settings (Context act) {
 		 settings = act.getSharedPreferences(SecurityCamAppActivity.PREFS_NAME, Context.MODE_PRIVATE);
 	}
@@ -27,9 +24,6 @@ public class Settings {
 		editor.commit();
 	}
  
-	/**
-	 * @return the password stored in prefs
-	 */
 	public String getSmtp() {
 		return settings.getString(SMTP_KEY,"");
 	}
@@ -39,10 +33,7 @@ public class Settings {
 		editor.putString(PORT_KEY,port);
 		editor.commit();
 	}
- 
-	/**
-	 * @return the password stored in prefs
-	 */
+
 	public String getPort() {
 		return settings.getString(PORT_KEY,"");
 	}
@@ -53,9 +44,6 @@ public class Settings {
 		editor.commit();
 	}
  
-	/**
-	 * @return the password stored in prefs
-	 */
 	public String getUser() {
 		return settings.getString(USER_KEY,"");
 	}
@@ -65,10 +53,7 @@ public class Settings {
 		editor.putString(PASSWORD_KEY,pass);
 		editor.commit();
 	}
- 
-	/**
-	 * @return the password stored in prefs
-	 */
+
 	public String getPass() {
 		return settings.getString(PASSWORD_KEY,"");
 	}
@@ -78,24 +63,29 @@ public class Settings {
 		editor.putString(FROM_KEY,from);
 		editor.commit();
 	}
- 
-	/**
-	 * @return the password stored in prefs
-	 */
+	
 	public String getFrom() {
 		return settings.getString(FROM_KEY,"");
 	}
+	
 	public void setTo(String to) {
 		Editor editor = settings.edit();
 		editor.putString(TO_KEY,to);
 		editor.commit();
 	}
- 
-	/**
-	 * @return the password stored in prefs
-	 */
+	
 	public String getTo() {
 		return settings.getString(TO_KEY,"");
+	}
+	
+	public void setCodeword(String codeword) {
+		Editor editor = settings.edit();
+		editor.putString(CODEWORD_KEY,codeword);
+		editor.commit();
+	}
+
+	public String getCodeword() {
+		return settings.getString(CODEWORD_KEY,"");
 	}
 	
 	
@@ -103,5 +93,5 @@ public class Settings {
 		return (!settings.getString(USER_KEY, "").equals(""));
 	}
 	
-	}
+}
  

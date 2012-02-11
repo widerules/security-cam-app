@@ -14,5 +14,5 @@
     <string name="from">From Address</string>
     <string name="to">To Address</string>
     <string name="config">config</string>
-
+	<string name="codeword">Sms Codeword</string>
 </resources>
