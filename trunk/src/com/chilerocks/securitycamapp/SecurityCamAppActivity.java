@@ -9,6 +9,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.media.audiofx.EnvironmentalReverb;
@@ -191,7 +192,13 @@ public class SecurityCamAppActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setTitle("final version");
+		String app_ver=null;
+		try {
+			app_ver = this.getPackageManager().getPackageInfo(this.getPackageName(), 0).versionName;
+		} catch (NameNotFoundException e) {
+			e.printStackTrace();
+		}
+		setTitle("Cam app version "+app_ver);
 		setContentView(R.layout.main);
 		mSurfaceView = new SurfaceView(this);
 
