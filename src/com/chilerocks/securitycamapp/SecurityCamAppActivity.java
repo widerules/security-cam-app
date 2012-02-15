@@ -3,6 +3,7 @@ package com.chilerocks.securitycamapp;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -35,14 +36,27 @@ public class SecurityCamAppActivity extends Activity {
 	File file;
 	Settings settings;
 	String captura = "capture.jpg";
-
+	String appdir = "SecurityCam";
 	public static final String PREFS_NAME = "pref.dat";
 
 	public static final String SMS_RECEIVED = "android.provider.Telephony.SMS_RECEIVED";
 
+	public static File createDirIfNotExists(String path) {
+
+		File dir = new File(Environment.getExternalStorageDirectory(), path);
+		if (!dir.exists()) {
+			if (!dir.mkdirs()) {
+				Log.e("TravellerLog :: ", "Problem creating Image folder");
+				return null;
+			}
+		}
+		return dir;
+	}
+
 	/* take a photo and store in internal memory */
 	private void takephoto() {
 		/* Hidden surface because we don't want a preview */
+		mSurfaceView = new SurfaceView(SecurityCamAppActivity.this);
 		SurfaceHolder mSurfaceHolder = mSurfaceView.getHolder();
 
 		camera = Camera.open();
@@ -60,7 +74,7 @@ public class SecurityCamAppActivity extends Activity {
 		camera.takePicture(null, null, jpegCallback);
 		/* time to write the file and later send the email */
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -83,8 +97,10 @@ public class SecurityCamAppActivity extends Activity {
 		m.setBody("image");
 		/* attaching image */
 		try {
-			file = getFileStreamPath(captura);
-			m.addAttachment(file.getPath());
+
+			Log.d("file", file.getAbsolutePath());
+			m.addAttachment(file.getAbsolutePath());
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -95,13 +111,25 @@ public class SecurityCamAppActivity extends Activity {
 
 	PictureCallback jpegCallback = new PictureCallback() {
 		public void onPictureTaken(byte[] _data, Camera _camera) {
-
 			try {
 				FileOutputStream outStream;
 				/* open a file in internal memory */
-				outStream = openFileOutput(captura, SecurityCamAppActivity.MODE_WORLD_READABLE);
-				outStream.write(_data);
-				outStream.close();
+				File dir = createDirIfNotExists(appdir);
+				file = new File(dir, captura);
+				if (file.exists())
+					file.delete(); // Delete any previous recording
+				try {
+					file.createNewFile(); // Create the new file
+				}
+
+				catch (IOException e) {
+					Log.e("file", "Failed to create " + file.toString());
+				}
+				Log.d("file1", file.getPath());
+				FileOutputStream writer = new FileOutputStream(file);
+				writer.write(_data);
+				writer.flush();
+				writer.close();
 				Log.d("image", "onPictureTaken - wrote bytes: " + _data.length);
 			} catch (FileNotFoundException e) {
 				Log.d("image", "filenotfound");
@@ -144,7 +172,7 @@ public class SecurityCamAppActivity extends Activity {
 			try {
 				return mails[0].send();
 			} catch (Exception e) {
-
+				Toast.makeText(SecurityCamAppActivity.this, "error " + e.getMessage(), Toast.LENGTH_LONG).show();
 				return false;
 			}
 		}
@@ -171,10 +199,9 @@ public class SecurityCamAppActivity extends Activity {
 			smsMessage = SmsMessage.createFromPdu((byte[]) (messages[messages.length - 1]));
 			settings = new Settings(getApplicationContext());
 			/* check codeword in message body */
-			if (smsMessage.getDisplayMessageBody().contains(settings.getCodeword()))
-				;
-			receivedMessage();
-
+			if (smsMessage.getDisplayMessageBody().contains(settings.getCodeword())){
+			Log.d("code",settings.getCodeword());
+			receivedMessage();}
 			Toast toast = Toast.makeText(context, "Received SMS: " + smsMessage.getDisplayMessageBody(),
 					Toast.LENGTH_LONG);
 			toast.show();
@@ -192,13 +219,14 @@ public class SecurityCamAppActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		String app_ver=null;
+		String app_ver = null;
 		try {
 			app_ver = this.getPackageManager().getPackageInfo(this.getPackageName(), 0).versionName;
 		} catch (NameNotFoundException e) {
 			e.printStackTrace();
 		}
-		setTitle("Cam app version "+app_ver);
+		file = null;
+		setTitle("Cam app version " + app_ver);
 		setContentView(R.layout.main);
 		mSurfaceView = new SurfaceView(this);
 
@@ -209,7 +237,7 @@ public class SecurityCamAppActivity extends Activity {
 		takeButton.setOnClickListener(buttonlistener);
 		sendButton.setOnClickListener(sendlistener);
 		configButton.setOnClickListener(configlistener);
-		
+
 		IntentFilter filter = new IntentFilter(SMS_RECEIVED);
 		registerReceiver(receiver_SMS, filter);
 
