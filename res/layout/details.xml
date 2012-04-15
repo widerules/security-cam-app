@@ -118,6 +118,48 @@
                 android:inputType="text"
                 android:singleLine="true" />
 
+            <TextView
+                android:id="@+id/TextView03"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/schedule" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/TextView02"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Hour" />
+
+                <EditText
+                    android:id="@+id/hour_input"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:imeOptions="actionDone"
+                    android:inputType="numberDecimal"
+                    android:singleLine="true" />
+
+                <TextView
+                    android:id="@+id/TextView01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Minute" />
+
+                <EditText
+                    android:id="@+id/minute_input"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:imeOptions="actionDone"
+                    android:inputType="numberDecimal"
+                    android:singleLine="true" />
+            </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/linearLayout1"
                 android:layout_width="fill_parent"
@@ -137,6 +179,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/test" />
             </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 

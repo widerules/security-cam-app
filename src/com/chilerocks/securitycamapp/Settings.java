@@ -13,6 +13,8 @@ public class Settings {
 	private static final String FROM_KEY = "from";
 	private static final String TO_KEY = "to";
 	private static final String CODEWORD_KEY="codeword";
+	private static final String HOUR_KEY="hour";
+	private static final String MINUTE_KEY="minute";
 	private final SharedPreferences settings;
     
 	public Settings (Context act) {
@@ -88,6 +90,25 @@ public class Settings {
 		return settings.getString(CODEWORD_KEY,"");
 	}
 	
+	public void setHour(int hour) {
+		Editor editor = settings.edit();
+		editor.putInt(HOUR_KEY,hour);
+		editor.commit();
+	}
+
+	public int getHour() {
+		return settings.getInt(HOUR_KEY,-1);
+	}
+
+	public void setMinute(int minute) {
+		Editor editor = settings.edit();
+		editor.putInt(MINUTE_KEY,minute);
+		editor.commit();
+	}
+
+	public int getMinute() {
+		return settings.getInt(MINUTE_KEY,-1);
+	}
 	
 	public boolean hasSettings() {
 		return (!settings.getString(USER_KEY, "").equals(""));

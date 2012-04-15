@@ -15,4 +15,7 @@
     <string name="to">To Address</string>
     <string name="config">config</string>
 	<string name="codeword">Sms Codeword</string>
+	<string name="Hour">Hour</string>
+	<string name="Minute">Minute</string>
+	<string name="schedule">Schedule Daily</string>
 </resources>

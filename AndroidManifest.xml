@@ -24,5 +24,6 @@
         </activity>
          <activity android:name=".ConfigActivity"
             		android:configChanges="orientation|keyboardHidden" />
+         <receiver  android:process=":remote" android:name="ScheduleReceiver"></receiver>
     </application>
 </manifest>
