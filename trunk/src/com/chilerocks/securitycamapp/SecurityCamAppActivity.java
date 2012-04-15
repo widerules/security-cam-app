@@ -5,7 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Calendar;
+
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -25,6 +29,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 public class SecurityCamAppActivity extends Activity {
@@ -208,7 +213,6 @@ public class SecurityCamAppActivity extends Activity {
 		}
 
 	};
-
 	private void receivedMessage() {
 		takephoto();
 		sendphoto();
@@ -240,7 +244,5 @@ public class SecurityCamAppActivity extends Activity {
 
 		IntentFilter filter = new IntentFilter(SMS_RECEIVED);
 		registerReceiver(receiver_SMS, filter);
-
 	}
-
 }

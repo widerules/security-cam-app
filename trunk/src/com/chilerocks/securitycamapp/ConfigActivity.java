@@ -1,7 +1,6 @@
 package com.chilerocks.securitycamapp;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +24,18 @@ public class ConfigActivity extends Activity {
 				settings.setSmtp(((TextView) (findViewById(R.id.smtp_text_input))).getText().toString());
 				settings.setPort(((TextView) (findViewById(R.id.port_text_input))).getText().toString());
 				settings.setCodeword(((TextView) (findViewById(R.id.codeword_text_input))).getText().toString());
+				int hour=Integer.parseInt( ((TextView) (findViewById(R.id.hour_input))).getText().toString());
+				int minute=Integer.parseInt( ((TextView) (findViewById(R.id.minute_input))).getText().toString());
+				if(hour>=0 && hour<24 && minute>=0  && minute<60){
+				Log.d("app","hour: "+hour+" minute: "+minute);
+				settings.setHour(hour);
+				settings.setMinute(minute);
+				ScheduleReceiver.setRecurringAlarm(getApplicationContext(), hour, minute);
+				}
+				else{
+					Toast.makeText(ConfigActivity.this, "Time format error.", Toast.LENGTH_SHORT).show();
+				}
+
 			}
 			if (v.getId() == R.id.ButtonCheck) {
 				Log.d("image", "testing");
@@ -69,6 +80,8 @@ public class ConfigActivity extends Activity {
 			((TextView) (findViewById(R.id.smtp_text_input))).setText(settings.getSmtp());
 			((TextView) (findViewById(R.id.port_text_input))).setText(settings.getPort());
 			((TextView) (findViewById(R.id.codeword_text_input))).setText(settings.getCodeword());
+			((TextView) (findViewById(R.id.minute_input))).setText (settings.getMinute()+"" );
+			((TextView) (findViewById(R.id.hour_input))).setText(settings.getHour()+"");
 
 		}
 
