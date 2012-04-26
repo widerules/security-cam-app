@@ -17,24 +17,50 @@ public class ConfigActivity extends Activity {
 
 			if (v.getId() == R.id.buttonSave) {
 				/* saving fields */
-				settings.setUser(((TextView) (findViewById(R.id.user_text_input))).getText().toString());
-				settings.setPass(((TextView) (findViewById(R.id.password_text_input))).getText().toString());
-				settings.setFrom(((TextView) (findViewById(R.id.from_text_input))).getText().toString());
-				settings.setTo(((TextView) (findViewById(R.id.to_text_input))).getText().toString());
-				settings.setSmtp(((TextView) (findViewById(R.id.smtp_text_input))).getText().toString());
-				settings.setPort(((TextView) (findViewById(R.id.port_text_input))).getText().toString());
-				settings.setCodeword(((TextView) (findViewById(R.id.codeword_text_input))).getText().toString());
-				int hour=Integer.parseInt( ((TextView) (findViewById(R.id.hour_input))).getText().toString());
-				int minute=Integer.parseInt( ((TextView) (findViewById(R.id.minute_input))).getText().toString());
-				if(hour>=0 && hour<24 && minute>=0  && minute<60){
-				Log.d("app","hour: "+hour+" minute: "+minute);
-				settings.setHour(hour);
-				settings.setMinute(minute);
-				ScheduleReceiver.setRecurringAlarm(getApplicationContext(), hour, minute);
+				settings.setUser(((TextView) (findViewById(R.id.user_text_input)))
+						.getText().toString());
+				settings.setPass(((TextView) (findViewById(R.id.password_text_input)))
+						.getText().toString());
+				settings.setFrom(((TextView) (findViewById(R.id.from_text_input)))
+						.getText().toString());
+				settings.setTo(((TextView) (findViewById(R.id.to_text_input)))
+						.getText().toString());
+				settings.setSmtp(((TextView) (findViewById(R.id.smtp_text_input)))
+						.getText().toString());
+				settings.setPort(((TextView) (findViewById(R.id.port_text_input)))
+						.getText().toString());
+				settings.setCodeword(((TextView) (findViewById(R.id.codeword_text_input)))
+						.getText().toString());
+
+				int hour = -1;
+				int minute = -1;
+
+				try {
+					hour = Integer
+							.parseInt(((TextView) (findViewById(R.id.hour_input)))
+									.getText().toString());
+					minute = Integer
+							.parseInt(((TextView) (findViewById(R.id.minute_input)))
+									.getText().toString());
+				} catch (Exception e) {
+					// doing nothing here because this is done on the else part
+					// in the next if statement
 				}
-				else{
-					Toast.makeText(ConfigActivity.this, "Time format error.", Toast.LENGTH_SHORT).show();
+
+				if (hour >= 0 && hour < 24 && minute >= 0 && minute < 60) {
+					Log.d("app", "hour: " + hour + " minute: " + minute);
+					settings.setHour(hour);
+					settings.setMinute(minute);
+					ScheduleReceiver.setRecurringAlarm(getApplicationContext(),
+							hour, minute);
+				} else {
+					Toast.makeText(ConfigActivity.this, "Time format error.",
+							Toast.LENGTH_SHORT).show();
 				}
+
+				// after the save is complete finish this activity and return to
+				// previous
+				finish();
 
 			}
 			if (v.getId() == R.id.ButtonCheck) {
