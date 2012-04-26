@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.TimeZone;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -14,13 +13,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
+import android.os.AsyncTask;
+import android.os.Environment;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.widget.Toast;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.os.Environment;
 
 public class ScheduleReceiver extends BroadcastReceiver {
 
@@ -73,7 +70,13 @@ public class ScheduleReceiver extends BroadcastReceiver {
 		m.setBody("image");
 		/* attaching image */
 		try {
-
+			
+			// re-initialize file if it's null
+			if(file == null){
+				File dir = new File(Environment.getExternalStorageDirectory(), appdir);
+				file = new File(dir, captura);
+			}
+			
 			Log.d("file", file.getAbsolutePath());
 			m.addAttachment(file.getAbsolutePath());
 
@@ -100,7 +103,6 @@ public class ScheduleReceiver extends BroadcastReceiver {
 	PictureCallback jpegCallback = new PictureCallback() {
 		public void onPictureTaken(byte[] _data, Camera _camera) {
 			try {
-				FileOutputStream outStream;
 				/* open a file in internal memory */
 				File dir = createDirIfNotExists(appdir);
 				file = new File(dir, captura);
@@ -166,20 +168,23 @@ public class ScheduleReceiver extends BroadcastReceiver {
 
 	public static void setRecurringAlarm(Context context, int hour, int minute) {
 		Calendar updateTime = Calendar.getInstance();
-		//updateTime.setTimeZone(TimeZone.getTimeZone("GMT"));
-		Log.d("app",updateTime.toString());
-		Log.d("app",updateTime.getTime().toLocaleString()) ;
-		
+		// updateTime.setTimeZone(TimeZone.getTimeZone("GMT"));
+		Log.d("app", updateTime.toString());
+		Log.d("app", updateTime.getTime().toLocaleString());
+
 		updateTime.set(Calendar.HOUR_OF_DAY, hour);
 		updateTime.set(Calendar.MINUTE, minute);
-		Log.d("app",updateTime.getTime().toLocaleString()) ;
+		
+		Log.d("app", updateTime.getTime().toLocaleString());
+		
 		Intent downloader = new Intent(context, ScheduleReceiver.class);
 		PendingIntent recurringDownload = PendingIntent.getBroadcast(context,
-				0, downloader, PendingIntent.FLAG_CANCEL_CURRENT);
+				0, downloader, PendingIntent.FLAG_UPDATE_CURRENT);
 		AlarmManager alarms = (AlarmManager) context
 				.getSystemService(Context.ALARM_SERVICE);
-		alarms.setInexactRepeating(AlarmManager.RTC_WAKEUP,updateTime.getTimeInMillis(), AlarmManager.INTERVAL_DAY,
-				recurringDownload);
+		alarms.setRepeating(AlarmManager.RTC_WAKEUP,
+				updateTime.getTimeInMillis(),
+				AlarmManager.INTERVAL_DAY, recurringDownload);
 	}
 
 }

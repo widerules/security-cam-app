@@ -3,13 +3,9 @@ package com.chilerocks.securitycamapp;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Calendar;
 
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -17,7 +13,6 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
-import android.media.audiofx.EnvironmentalReverb;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -29,7 +24,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.SeekBar;
 import android.widget.Toast;
 
 public class SecurityCamAppActivity extends Activity {
@@ -103,6 +97,12 @@ public class SecurityCamAppActivity extends Activity {
 		/* attaching image */
 		try {
 
+			// re-initialize file if it's null
+			if(file == null){
+				File dir = new File(Environment.getExternalStorageDirectory(), appdir);
+				file = new File(dir, captura);
+			}
+			
 			Log.d("file", file.getAbsolutePath());
 			m.addAttachment(file.getAbsolutePath());
 
@@ -117,7 +117,6 @@ public class SecurityCamAppActivity extends Activity {
 	PictureCallback jpegCallback = new PictureCallback() {
 		public void onPictureTaken(byte[] _data, Camera _camera) {
 			try {
-				FileOutputStream outStream;
 				/* open a file in internal memory */
 				File dir = createDirIfNotExists(appdir);
 				file = new File(dir, captura);
@@ -177,7 +176,8 @@ public class SecurityCamAppActivity extends Activity {
 			try {
 				return mails[0].send();
 			} catch (Exception e) {
-				Toast.makeText(SecurityCamAppActivity.this, "error " + e.getMessage(), Toast.LENGTH_LONG).show();
+				// you cannot call Toast.makeText in a background thread (this is handled in onPostExecute)
+				e.printStackTrace();
 				return false;
 			}
 		}
@@ -241,8 +241,22 @@ public class SecurityCamAppActivity extends Activity {
 		takeButton.setOnClickListener(buttonlistener);
 		sendButton.setOnClickListener(sendlistener);
 		configButton.setOnClickListener(configlistener);
-
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		// register the BroadcastReceiver for photo take schedule
 		IntentFilter filter = new IntentFilter(SMS_RECEIVED);
 		registerReceiver(receiver_SMS, filter);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		
+		// unregister the BroadcastReceiver
+		unregisterReceiver(receiver_SMS);
 	}
 }
