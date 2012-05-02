@@ -14,6 +14,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.os.AsyncTask;
+import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.telephony.SmsMessage;
@@ -50,6 +51,37 @@ public class SecurityCamAppActivity extends Activity {
 			}
 		}
 		return dir;
+	}
+	
+	private String getBatteryInfoString()
+	{
+		IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+	    Intent batteryInfo = registerReceiver(null, filter);
+	    
+	    StringBuilder out = new StringBuilder();
+	    
+	    int batteryLevel = batteryInfo.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
+	    int batteryScale = batteryInfo.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
+	    int phonePlugged = batteryInfo.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
+	    
+	    if (phonePlugged == BatteryManager.BATTERY_PLUGGED_AC)
+	    {
+	    	out.append("Phone is plugged to the power source (AC).");
+	    }
+	    else
+	    if (phonePlugged == BatteryManager.BATTERY_PLUGGED_USB)
+	    {
+	    	out.append("Phone is plugged to the power source (USB).");
+	    }
+	    else
+	    {
+	    	out.append("Phone is discharging.");
+	    }
+	    
+	    out.append("\n");
+	    out.append("Battery level: " + (int)(batteryLevel / (float)batteryScale * 100) + "%");
+	    
+	    return out.toString();
 	}
 
 	/* take a photo and store in internal memory */
@@ -93,7 +125,7 @@ public class SecurityCamAppActivity extends Activity {
 		m.set_to(toArr);
 		m.set_from(settings.getFrom());
 		m.set_subject("Security Cam App image");
-		m.setBody("image");
+		m.setBody("image \n" + getBatteryInfoString());
 		/* attaching image */
 		try {
 
