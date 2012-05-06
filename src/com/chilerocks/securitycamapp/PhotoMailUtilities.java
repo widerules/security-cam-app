@@ -133,6 +133,8 @@ public class PhotoMailUtilities {
 		mSurfaceView = new SurfaceView(mContext);
 		mMainLayout.addView(mSurfaceView);
 		
+		mSurfaceView.getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+		
 		mSurfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
 			
 			@Override
