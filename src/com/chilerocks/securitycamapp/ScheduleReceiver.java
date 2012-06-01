@@ -7,12 +7,15 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+import com.chilerocks.securitycamapp.util.*;
 
 public class ScheduleReceiver extends BroadcastReceiver {
 	
+	private static final String TAG = "ScheduleReceiver";
+
 	@Override
 	public void onReceive(Context context, Intent intent) {
+		Log.d(TAG, "Alarm Received");
 		Intent i = new Intent(context, PictureTakerSenderActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(i);

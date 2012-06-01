@@ -2,6 +2,7 @@ package com.chilerocks.securitycamapp;
 
 import com.chilerocks.securitycamapp.PhotoMailUtilities.OnEmailSentListener;
 import com.chilerocks.securitycamapp.PhotoMailUtilities.OnPhotoTakenListener;
+import com.chilerocks.securitycamapp.util.Log;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,6 +12,8 @@ import android.os.PowerManager.WakeLock;
 import android.widget.LinearLayout;
 
 public class PictureTakerSenderActivity extends Activity {
+	
+	private static final String TAG = "PictureTakerSenderActivity";
 	
 	PhotoMailUtilities mPhotoMailUtilities;
 	
@@ -25,6 +28,7 @@ public class PictureTakerSenderActivity extends Activity {
 			PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
 			mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "PictureTakerSenderActivity");
 			mWakeLock.acquire();
+			Log.d(TAG, "Wake Service");
 		}
 	}
 	
@@ -34,6 +38,7 @@ public class PictureTakerSenderActivity extends Activity {
 		{
 			mWakeLock.release();
 			mWakeLock = null;
+			Log.d(TAG, "Sleep Service");
 		}
 	}
 	
@@ -49,12 +54,14 @@ public class PictureTakerSenderActivity extends Activity {
 			
 			@Override
 			public void emailSuccess() {
+				Log.d(TAG, "Mail Sent");
 				PictureTakerSenderActivity.this.finish();
 				releaseWakelock();
 			}
 			
 			@Override
 			public void emailError() {
+				Log.e(TAG, "ERROR: SENDING MAIL FAILED");
 				PictureTakerSenderActivity.this.finish();
 				releaseWakelock();
 			}
@@ -64,11 +71,13 @@ public class PictureTakerSenderActivity extends Activity {
 			
 			@Override
 			public void photoSuccess() {
-				mPhotoMailUtilities.sendphoto();
+				Log.d(TAG, "Photo Taken Successfully");
+				mPhotoMailUtilities.sendphoto();				
 			}
 			
 			@Override
 			public void photoError() {
+				Log.e(TAG, "Taking Photo Failed");
 				PictureTakerSenderActivity.this.finish();
 				releaseWakelock();
 			}

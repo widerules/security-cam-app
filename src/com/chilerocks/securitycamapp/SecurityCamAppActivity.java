@@ -1,5 +1,7 @@
 package com.chilerocks.securitycamapp;
 
+import com.chilerocks.securitycamapp.util.Log;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -12,6 +14,7 @@ import android.widget.ImageView;
 
 public class SecurityCamAppActivity extends Activity {
 
+	public final static String APP_LOG_DIR_NAME = "SecurityCam"; 
 	protected String _path;
 	ImageView imageview;
 	Settings settings;
@@ -20,6 +23,7 @@ public class SecurityCamAppActivity extends Activity {
 	public static final String PREFS_NAME = "pref.dat";
 
 	public static final String SMS_RECEIVED = "android.provider.Telephony.SMS_RECEIVED";
+	private static final String TAG = "SecurityCamAppActivity";
 
 	private OnClickListener buttonlistener = new OnClickListener() {
 		public void onClick(View v) {
@@ -50,6 +54,7 @@ public class SecurityCamAppActivity extends Activity {
 		try {
 			app_ver = this.getPackageManager().getPackageInfo(this.getPackageName(), 0).versionName;
 		} catch (NameNotFoundException e) {
+			Log.e(TAG, "Exception: " + e.getMessage());
 			e.printStackTrace();
 		}
 		setTitle("Cam app version " + app_ver);

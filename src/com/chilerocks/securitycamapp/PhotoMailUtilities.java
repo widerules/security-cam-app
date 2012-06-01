@@ -15,13 +15,16 @@ import android.os.AsyncTask;
 import android.os.BatteryManager;
 import android.os.Environment;
 import android.os.Handler;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.chilerocks.securitycamapp.util.Log;
+
 public class PhotoMailUtilities {
+	
+	private static final String TAG = "PhotoMailUtilities";
 	
 	private Settings mSettings;
 	private Context mContext;
@@ -51,24 +54,27 @@ public class PhotoMailUtilities {
 				}
 
 				catch (IOException e) {
-					Log.e("file", "Failed to create " + mFile.toString());
+					Log.e(TAG, "Failed to create " + mFile.toString());
+					Log.e(TAG, "Exception: " + e.getMessage());
 				}
-				Log.d("file1", mFile.getPath());
+				Log.d(TAG, mFile.getPath());
 				FileOutputStream writer = new FileOutputStream(mFile);
 				writer.write(_data);
 				writer.flush();
 				writer.close();
 				Toast.makeText(mContext, "Picture successfully taken.", Toast.LENGTH_LONG).show();
 				Log.d("image", "onPictureTaken - wrote bytes: " + _data.length);
+				Log.d(TAG, "Photo Saved");
 			} catch (FileNotFoundException e) {
 				Log.d("image", "filenotfound");
+				Log.e(TAG, "Exception:" + e.getMessage());
 				e.printStackTrace();
 			} catch (IOException e) {
 				Log.d("image", "ioexception");
+				Log.e(TAG, "Exception:" + e.getMessage());
 				e.printStackTrace();
 			}
-			Log.d("image", "onPictureTaken - jpeg");
-			
+			Log.d("image", "onPictureTaken - jpeg");			
 			_camera.release();
 			
 			mMainLayout.removeView(mSurfaceView);
@@ -154,11 +160,13 @@ public class PhotoMailUtilities {
 					return;
 				
 				mCamera = Camera.open();
-				
+				Log.d(TAG, "Camera Opened");
 				try {
 					mCamera.setPreviewDisplay(holder);
+					Log.d(TAG, "Camera Preview Dislplay Set Successfully");	
 				} catch (IOException e) {
 					e.printStackTrace();
+					Log.e(TAG, "Exception: " + e.getMessage() );
 					mMainLayout.removeView(mSurfaceView);
 					mSurfaceView = null;
 					mIsPictureBeingTaken = false;
@@ -262,6 +270,7 @@ public class PhotoMailUtilities {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			Log.e(TAG, "Exception : " + e.getMessage());
 		}
 		/* send mail in background, can take a while */
 		SendEmail task = new SendEmail();
@@ -283,6 +292,7 @@ public class PhotoMailUtilities {
 			} catch (Exception e) {
 				// you cannot call Toast.makeText in a background thread (this is handled in onPostExecute)
 				e.printStackTrace();
+				Log.e(TAG, "Excpetion : " + e.getMessage());
 				return false;
 			}
 		}
@@ -293,9 +303,11 @@ public class PhotoMailUtilities {
 				if (mOnEmailSentListener != null)
 					mOnEmailSentListener.emailSuccess();
 				Toast.makeText(mContext, "Email was sent successfully.", Toast.LENGTH_LONG).show();
+				Log.d(TAG, "Mail Sent");
 			} else {
 				if (mOnEmailSentListener != null)
 					mOnEmailSentListener.emailError();
+				Log.e(TAG, "ERROR: SEND MAIL FAILED");
 				Toast.makeText(mContext, "Email was not sent.", Toast.LENGTH_LONG).show();
 			}
 		}
