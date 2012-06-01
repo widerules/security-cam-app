@@ -16,9 +16,14 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart; 
 import javax.mail.internet.MimeMessage; 
 import javax.mail.internet.MimeMultipart; 
+
+import com.chilerocks.securitycamapp.util.Log;
  
  
 public class Mail extends javax.mail.Authenticator { 
+	
+	private final static String TAG = "Mail";
+	
   private String _user; 
   private String _pass; 
  
@@ -103,8 +108,11 @@ public class Mail extends javax.mail.Authenticator {
       // send email 
       Transport.send(msg); 
  
+      Log.d(TAG, "MAIL IS SENT");
+      
       return true; 
     } else { 
+    	Log.e(TAG, "ERROR: MANDATORY DATA IS MISSING");
       return false; 
     } 
   } 

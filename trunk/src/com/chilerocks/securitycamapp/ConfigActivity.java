@@ -2,14 +2,17 @@ package com.chilerocks.securitycamapp;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chilerocks.securitycamapp.util.*;
+
 public class ConfigActivity extends Activity {
+	protected static final String TAG = "ConfigActivity";
+
 	Settings settings;
 
 	private OnClickListener buttonlistener = new OnClickListener() {
@@ -45,6 +48,9 @@ public class ConfigActivity extends Activity {
 				} catch (Exception e) {
 					// doing nothing here because this is done on the else part
 					// in the next if statement
+					
+					Log.e(TAG, "Exception: " + e.getMessage());
+					
 				}
 
 				if (hour >= 0 && hour < 24 && minute >= 0 && minute < 60) {
@@ -86,6 +92,7 @@ public class ConfigActivity extends Activity {
 
 				} catch (Exception e) {
 					e.printStackTrace();
+					Log.e(TAG, "Exception: " + e.getMessage());
 				}
 			}
 		}
