@@ -9,6 +9,7 @@ import java.io.Writer;
 import java.util.Date;
 
 import com.chilerocks.securitycamapp.SecurityCamAppActivity;
+import com.chilerocks.securitycamapp.SecurityCamApplication;
 
 import android.os.Environment;
 import android.text.format.DateFormat;
@@ -19,7 +20,7 @@ public class Log {
     
     static
     {
-		File dir = new File(Environment.getExternalStorageDirectory(), SecurityCamAppActivity.APP_LOG_DIR_NAME);
+		File dir = new File(Environment.getExternalStorageDirectory(), SecurityCamApplication.APP_LOG_DIR_NAME);
 		dir = new File(dir, "log");
 	
 		if (!dir.exists()) {

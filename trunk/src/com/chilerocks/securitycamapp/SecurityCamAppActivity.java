@@ -14,7 +14,7 @@ import android.widget.ImageView;
 
 public class SecurityCamAppActivity extends Activity {
 
-	public final static String APP_LOG_DIR_NAME = "SecurityCam"; 
+	
 	protected String _path;
 	ImageView imageview;
 	Settings settings;
@@ -54,7 +54,7 @@ public class SecurityCamAppActivity extends Activity {
 		try {
 			app_ver = this.getPackageManager().getPackageInfo(this.getPackageName(), 0).versionName;
 		} catch (NameNotFoundException e) {
-			Log.e(TAG, "Exception: " + e.getMessage());
+			Log.logCaughtException(e);
 			e.printStackTrace();
 		}
 		setTitle("Cam app version " + app_ver);

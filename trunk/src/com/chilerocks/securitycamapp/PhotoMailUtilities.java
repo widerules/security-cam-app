@@ -55,7 +55,7 @@ public class PhotoMailUtilities {
 
 				catch (IOException e) {
 					Log.e(TAG, "Failed to create " + mFile.toString());
-					Log.e(TAG, "Exception: " + e.getMessage());
+					Log.logCaughtException(e);
 				}
 				Log.d(TAG, mFile.getPath());
 				FileOutputStream writer = new FileOutputStream(mFile);
@@ -67,11 +67,11 @@ public class PhotoMailUtilities {
 				Log.d(TAG, "Photo Saved");
 			} catch (FileNotFoundException e) {
 				Log.d("image", "filenotfound");
-				Log.e(TAG, "Exception:" + e.getMessage());
+				Log.logCaughtException(e);
 				e.printStackTrace();
 			} catch (IOException e) {
 				Log.d("image", "ioexception");
-				Log.e(TAG, "Exception:" + e.getMessage());
+				Log.logCaughtException(e);
 				e.printStackTrace();
 			}
 			Log.d("image", "onPictureTaken - jpeg");			
@@ -166,7 +166,7 @@ public class PhotoMailUtilities {
 					Log.d(TAG, "Camera Preview Dislplay Set Successfully");	
 				} catch (IOException e) {
 					e.printStackTrace();
-					Log.e(TAG, "Exception: " + e.getMessage() );
+					Log.logCaughtException(e);
 					mMainLayout.removeView(mSurfaceView);
 					mSurfaceView = null;
 					mIsPictureBeingTaken = false;
@@ -270,7 +270,7 @@ public class PhotoMailUtilities {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			Log.e(TAG, "Exception : " + e.getMessage());
+			Log.logCaughtException(e);
 		}
 		/* send mail in background, can take a while */
 		SendEmail task = new SendEmail();
@@ -292,7 +292,7 @@ public class PhotoMailUtilities {
 			} catch (Exception e) {
 				// you cannot call Toast.makeText in a background thread (this is handled in onPostExecute)
 				e.printStackTrace();
-				Log.e(TAG, "Excpetion : " + e.getMessage());
+				Log.logCaughtException(e);
 				return false;
 			}
 		}
