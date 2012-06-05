@@ -49,8 +49,7 @@ public class ConfigActivity extends Activity {
 					// doing nothing here because this is done on the else part
 					// in the next if statement
 					
-					Log.e(TAG, "Exception: " + e.getMessage());
-					
+					Log.logCaughtException(e);					
 				}
 
 				if (hour >= 0 && hour < 24 && minute >= 0 && minute < 60) {
@@ -92,7 +91,7 @@ public class ConfigActivity extends Activity {
 
 				} catch (Exception e) {
 					e.printStackTrace();
-					Log.e(TAG, "Exception: " + e.getMessage());
+					Log.logCaughtException(e);
 				}
 			}
 		}
